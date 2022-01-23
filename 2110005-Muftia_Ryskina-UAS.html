@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   
+    <title>Document</title>
+    <style type="text/css">
+tr:nth-child(even) {
+  background-color: #ecceceda;
+}
+body {
+  color: rgb(66, 33, 47);
+}
+
+h1 {
+  color: rgb(141, 73, 110);
+}
+    </style>
+</head>
+<body>
+   <h2 align="center">Form Pendaftaran Mahasiswa</h2> 
+<form id="form">
+    <table align="center">
+        <tr>
+            <td>Nama</td><td>:</td></td><td><input type="text" name="nama" id="nama"></td>
+        </tr>
+        <tr>
+            <td>Jumlah Tiket</td><td>:</td><td><input type="text" name="tiket" id="tiket"></td>
+        </tr>
+        <tr>
+            <td>Kelas</td><td>:</td>
+            <td>
+                <select name="kelas" id="kelas">
+                    <option value="Ekonomi">Ekonomi</option>
+                    <option value="Bisnis">Bisnis</option>
+                    <option value="Eksekutif">Eksekutif</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Tujuan</td><td>:</td>
+            <td>
+                <select name="tujuan" id="tujuan">
+                    <option value="Bali">Bali</option>
+                    <option value="Yogyakarta">Yogyakarta</option>
+                    <option value="Jambi">Jambi</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Bagasi</td><td>:</td>
+            <td>
+                <input type="radio" name="bagasi" value="5" id="">5 Kg
+                <input type="radio" name="bagasi" value="10">10 Kg
+                <input type="radio" name="bagasi" value="15">15 Kg
+            </td>
+        </tr>
+        <tr>
+            <td>Asuransi</td><td>:</td>
+            <td>
+                <input type="checkbox" name="asuransi" value="Asuransi Jiwa" id="as1">Asuransi Jiwa<br>
+                <input type="checkbox" name="asuransi" value="Asuransi Kecelakaan" id="as2">Asuransi Kecelakaan<br>
+                <input type="checkbox" name="asuransi" value="Asuransi Keterlambatan" id="as3">Asuransi Keterlambatan
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Kirim" onclick="tampil()"></td><td></td><td></td>
+        </tr>
+</table>
+</form>
+    
+</body>
+</html>
+
+<script>
+    document.getElementById("form").onsubmit=submit
+
+    function submit(){
+        var jon=document.getElementById("nama").value;
+        var tiket=document.getElementById("tiket").value;
+        var kelas=document.getElementById("kelas").value;
+        var tujuan=document.getElementById("tujuan").value;
+        var bagasi=document.querySelector("input[name=bagasi]:checked")?document.querySelector("input[name=bagasi]:checked").value:"Bimbang";
+        var nasuransi=document.querySelectorAll("input[name=asuransi]:checked");
+        var asuransi=[];
+        var harga="";
+        var fasilitas="";
+        var biaya_bagasi="";
+        var diskon="";
+        var as1=document.getElementById("as1");
+        var as2=document.getElementById("as2");
+        var as3=document.getElementById("as3");
+
+        
+        for(var a=0;a<nasuransi.length;a++){
+            asuransi.push(nasuransi[a].value)
+        };
+
+        if (kelas=="Ekonomi"){
+            fasilitas="Air Minum";
+        }
+        else if (kelas=="Bisnis"){
+            fasilitas="Snack";
+        }
+        else {
+            fasilitas="Makan";
+        } ;
+
+        if (kelas=="Ekonomi"){
+            harga=1000000;
+        }
+        else if(kelas=="Bisnis"){
+            harga=2000000;
+        }
+        else{
+            harga=3000000;
+        };
+
+        if (bagasi==5){
+            biaya_bagasi=100000;
+        }
+        else if(bagasi==10){
+            biaya_bagasi=150000;
+        }
+        else{
+            biaya_bagasi=200000;
+        };
+
+        if(tiket>3){
+            diskon=(tiket*harga)*30/100;
+        }
+        else{
+            diskon=0;
+        };
+
+        if (as1.checked==true){
+            as_1=50000;
+        }
+        else{
+            as_1=0;
+        };
+        if (as2.checked==true){
+            as_2=50000;
+        }
+        else{
+            as_2=0;
+        };
+        if (as3.checked==true){
+            as_3=50000;
+        }
+        else{
+            as_3=0;
+        };
+
+        j_asuransi=as_1 + as_2 + as_3;
+        n_total= tiket * harga - diskon + biaya_bagasi + j_asuransi;
+
+
+        document.write(`Nama            : ${jon}<br>`);
+        document.write(`Tiket           : ${tiket}<br>`);
+        document.write(`Kelas           : ${kelas} (${fasilitas}) <br>`);
+        document.write(`Tujuan          : ${tujuan}<br>`);
+        document.write(`Bagasi          : ${bagasi} Kg <br>`);
+        document.write(`Asuransi        : ${asuransi.join(",")}<br>`);
+        document.write(`Biaya asuransi  : ${j_asuransi}<br>`);
+        document.write(`Diskon          : ${diskon}<br>`);
+        document.write(`Total           : ${n_total}<br>`);
+    }
+
+</script>
